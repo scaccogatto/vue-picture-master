@@ -1,13 +1,17 @@
 {
   "name": "vue-picture-master",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.2.4",
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "serve": "vue-cli-service serve ./src/dev/main.js",
+    "build": "vue-cli-service build --target lib --name vue-picture-master src/components/PictureMaster/PictureMaster.vue",
     "lint": "vue-cli-service lint",
+    "lint-fix": "vue-cli-service lint --fix",
     "test:unit": "vue-cli-service test:unit"
   },
+  "main": "dist/vue-picture-master.common.js",
+  "files": [
+    "dist/"
+  ],
   "dependencies": {
     "core-js": "^2.6.5",
     "vue": "^2.6.10"
