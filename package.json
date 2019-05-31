@@ -1,6 +1,6 @@
 {
   "name": "vue-picture-master",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "scripts": {
     "serve": "vue-cli-service serve ./src/dev/main.js",
     "build": "vue-cli-service build --target lib --name vue-picture-master src/index.js",
