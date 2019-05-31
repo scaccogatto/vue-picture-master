@@ -1,14 +1,19 @@
 language: node_js
-
 node_js:
-  - lts/dubnium
-
+- lts/dubnium
 install:
-  - npm install
-
+- npm install
 script:
-  - npm run build
-
+- npm run build
 cache:
   directories:
   - node_modules
+deploy:
+  provider: npm
+  email: marco-gatto-boffo
+  skip_cleanup: true
+  api_key:
+    secure: IT3+TmqXLhxkgikUYfhaF0a29lY4ymmcLykInQ3mmGGTKs4GJ5NeJ0UB0exoByThoPuBASBCHRF15cNbG/L3yfr6HFVZo06Fc8CngahW8Kp0cKkDf5J+V68q/sqtjmvoAI4Ye+TblId7PEjxAKGHlA8sq7EPIcGxpwO2dNbGqIZlCdAsw4/2YsPxunJufUfW7Qy6kTQzXbsCnEonWLlUO4Rx46aEygdj2mUcjziHWgEAklDwNs51roc50BJLMFML4GT1+6o7RJEOvHc+IpQhi+412GZlo/mk2Qo8PuAs7WM6E2Grv2LnSyGzEmv8kBvs7T7fRX0YAzs0DyZUaaFXAa45pLX0R4c3YFfkc0ZVZAC54GB1omsmIVlrtxUS6IQnHMJH2rtXm8vFJc8VjyG2HBEdgA1VAPk4gB3NpqfrQSUFHQuCaIQP79JdpHyW25fNQfwQKfZMdB8IXUUxP/dX+cE/s+gQm60Dg2PM80bTQESCz2CICsnm1YYcE9W/1K6VuZI0nzfFpV21OSLLahLN7qYQ3EvVJIwZR8YznfRGMVW+FLRUU799jyypn+4XNADTkdQBFo3OA/IMQ5ChutbwuQtPcVh4c/cRGZpusfX/jJFLk+48p0edS6L/RKG0pYhF5KCyPFe6zvSyK7SeyVuomozgDSef0Q73e7i3AV3kuY4=
+  on:
+    tags: true
+    repo: scaccogatto/vue-picture-master
