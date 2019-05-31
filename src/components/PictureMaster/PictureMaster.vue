@@ -28,7 +28,7 @@
 
         <img
           ref="masterPicture"
-          :src="baseImage.src"
+          :srcset="baseImage.srcset"
           :alt="baseImage.alt"
           @load="$_setLoaded"
         />

@@ -31,12 +31,12 @@ export default {
   <PictureMaster
     :placeholder="placeholder"
     :cuts="cuts"
-    :baseImage="baseImage"
-    :heightRatio="0.75"
-    :customCanvas="false"
+    :base-image="baseImage"
+    :height-ratio="0.75"
+    :custom-canvas="false"
     :animated="true"
     :blurred="true"
-    :forceLoadingDelay="750"
+    :force-loading-delay="750"
     @load="onLoad" />
 </template>
 ```
@@ -51,11 +51,17 @@ const placeholder = {
 }
 
 // complete sources array, we get it from helpers
-const cuts = helpers.builder()
+const cuts = helpers.builder(({ src, width }) => `https://placekitten.com/${width}/${Math.round(width * 0.75)}`)
+  ({
+    types: [
+      'image/webp',
+      'image/jpeg'
+    ]
+  })
 
 // the tiniest image you want to display
 const baseImage = {
-  src: 'https://placekitten.com/400/300',
+  srcset: 'https://placekitten.com/400/300 1x, https://placekitten.com/800/600 2x,',
   alt: 'alt text'
 }
 

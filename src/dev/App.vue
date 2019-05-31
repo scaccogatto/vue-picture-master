@@ -3,14 +3,23 @@
     <PictureMaster
       :placeholder="placeholder"
       :cuts="cuts"
-      :baseImage="baseImage"
-      :heightRatio="heightRatio" />
+      :base-image="baseImage"
+      :height-ratio="heightRatio" />
   </div>
 </template>
 
 <script>
-import PictureMaster from '@/components/PictureMaster/PictureMaster'
-import helpers from '@/components/PictureMaster/libs/helpers'
+import { PictureMaster, helpers } from '@/index.js'
+
+const config = {
+  types: [
+    'image/webp',
+    'image/jpeg'
+  ]
+}
+
+const templateBuilder = ({ src, width, quality }) => `https://placekitten.com/${width}/${Math.round(width * 0.75)} 1x, https://placekitten.com/${width * 2}/${Math.round(width * 0.75) * 2} 2x`
+const build = helpers.builder(templateBuilder)(config)
 
 export default {
   components: {
@@ -21,49 +30,13 @@ export default {
       src: 'https://placekitten.com/40/30',
       alt: 'kitten-placeholder'
     },
-    cuts: [
-      {
-        type: 'image/jpeg',
-        media: '(min-width: 1281px)',
-        src: 'https://placekitten.com/1200/900'
-      },
-      {
-        type: 'image/jpeg',
-        media: '(min-width: 800px)',
-        src: 'https://placekitten.com/900/675'
-      },
-      {
-        type: 'image/jpeg',
-        media: '(min-width: 500px)',
-        src: 'https://placekitten.com/675/506'
-      }
-    ],
+    cuts: build,
     baseImage: {
-      src: 'https://placekitten.com/250/187',
+      srcset: 'https://placekitten.com/250/187 1x, https://placekitten.com/500/374 2x',
       alt: 'alt text'
     },
     heightRatio: 0.75
-  }),
-  mounted () {
-    const config = {
-      src: 'http://cdn.it/img.png',
-      ratio: 0.75,
-      quality: 80,
-      types: [
-        'image/webp',
-        'image/jpeg'
-      ]
-    }
-
-    const cutsNumber = 4
-    const cutsMin = 500
-    const cutsMax = 1281
-
-    const templateBuilder = ({ src, width, height, quality }) => `${src}?w=${width}&h=${height}&q=${quality}`
-
-    const build = helpers.builder(templateBuilder)(cutsNumber)(cutsMin)(cutsMax)(config)
-    console.log(build)
-  }
+  })
 }
 </script>
 

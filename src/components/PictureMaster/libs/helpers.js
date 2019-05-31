@@ -3,46 +3,73 @@ const preciseHeightRatio = decimals => width => height => (height / width).toFix
 const heightRatio = preciseHeightRatio(2)
 
 // cuts
-const cutsSizes = cutsNumber => cutsMin => cutsMax =>
-  Array.from(new Array(cutsNumber))
-    .map((e, i) => cutsMin * i)
-    .filter(size => size < cutsMax)
+const defaultCuts = [
+  {
+    media: '(min-width: 2561px)',
+    width: 2880
+  },
+  {
+    media: '(min-width: 2561px)',
+    width: 2880
+  },
+  {
+    media: '(min-width: 2305px)',
+    width: 2560
+  },
+  {
+    media: '(min-width: 1921px)',
+    width: 2304
+  },
+  {
+    media: '(min-width: 1441px)',
+    width: 1920
+  },
+  {
+    media: '(min-width: 1367px)',
+    width: 1440
+  },
+  {
+    media: '(min-width: 1281px)',
+    width: 1366
+  },
+  {
+    media: '(min-width: 1025px)',
+    width: 1280
+  },
+  {
+    media: '(min-width: 769px)',
+    width: 1024
+  },
+  {
+    media: '(min-width: 0px)',
+    width: 768
+  }
+]
 
-// const cutsMedia = mediaTrigger => cutsUnit => cutsSizes =>
-//   cutsSizes
-//     .map(size => size + cutsUnit)
-//     .map(size => `${mediaTrigger}: ${size}`)
-//     .map(size => `(${size})`)
-
-const builder = templateFn => cutsNumber => cutsMin => cutsMax => config => {
-  const sizes = cutsSizes(cutsNumber)(cutsMin)(cutsMax)
-
-  const cuts = cutsMin < cutsMax
-    ? sizes.slice().reverse()
-    : sizes
-
+const builder = templateFn => config => {
+  // fallback to jpeg
   const types = config.types || ['jpeg']
 
-  const mediaTrigger = config.mediaTrigger || 'min-width'
-  const mediaUnit = config.mediaUnit || 'px'
+  // default to personal chosen cuts
+  const cuts = config.cuts || defaultCuts
 
   return cuts
+    // add all types
     .reduce(
       (accumulator, cut) => [].concat(accumulator, ...types.map(type => ({ type, cut }))),
       []
     )
-    .map(metaCut => Object.assign({}, metaCut, {
-      src: templateFn(Object.assign({}, config, { width: metaCut.cut, height: metaCut.cut * config.ratio }))
-    }))
-    .map(({ type, cut, src }) => ({
+    // spread cut
+    .map(({ type, cut }) => ({
       type,
-      media: `(${mediaTrigger}: ${cut}${mediaUnit})`,
-      src
+      media: cut.media,
+      src: templateFn(Object.assign({}, config, { width: cut.width }))
     }))
 }
 
 export default {
   preciseHeightRatio,
   heightRatio,
-  builder
+  builder,
+  defaultCuts
 }
